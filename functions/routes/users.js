@@ -3,6 +3,7 @@ const functions = require('firebase-functions');
 var sys = require('util');
 var express = require('express');
 var router = express.Router();
+// var promise = new Promise((resolve, reject) => {
 
 // setup firestore
 admin.initializeApp(functions.config().firebase);
@@ -35,12 +36,11 @@ router.post('/', function(req, res, next) {
   // };
   var docRef = db.collection('cities').doc(newData.name);
   var setLA = docRef.set(newData).then(ref => {
-    console.log('Added document with ID: ', ref.id);
-    res.status(err.status || 500);
-    res.json({
-      message: err.message,
-      error: err
-    });
+    console.log('success');
+    res.send('success');
+  }).catch(function (error) {
+    console.log(error);
+    next(error);
   });
 })
 module.exports = router;
