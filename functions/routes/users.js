@@ -11,30 +11,22 @@ var db = admin.firestore();
 
 /* Get user list */
 router.get('/', function(req, res, next) {
-  var cityRef = db.collection('cities').doc(req.body.name);
-  var getDoc = cityRef.get()
-      .then(doc => {
-        if (!doc.exists) {
-          console.log('No such document!');
-        } else {
-          console.log('Document data:', doc.data());
-          res.json(doc.data());
-        }
-      })
-      .catch(err => {
-        console.log('Error getting document', err);
+  db.collection('users').get()
+    .then((snapshot) => {
+      var users = new Array();
+      snapshot.forEach((doc) => {
+        users.push(doc.data());
       });
+      res.json(users);
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 router.post('/', function(req, res, next) {
   var newData = req.body
-  // var data = {
-  //   name: 'Los Angeles',
-  //   state: 'CA',
-  //   country: 'USA',
-  //   capital: true
-  // };
-  var docRef = db.collection('cities').doc(newData.name);
+  var docRef = db.collection('users').doc(newData.name);
   var setLA = docRef.set(newData).then(ref => {
     console.log('success');
     res.send('success');
