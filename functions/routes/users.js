@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var newData = req.body
   var docRef = db.collection('users').doc(newData.name);
-  var setLA = docRef.set(newData).then(ref => {
+  docRef.set(newData).then(ref => {
     console.log('success');
     res.send('success');
   }).catch(function (error) {
