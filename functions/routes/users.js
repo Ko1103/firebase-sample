@@ -3,7 +3,6 @@ const functions = require('firebase-functions');
 var sys = require('util');
 var express = require('express');
 var router = express.Router();
-// var promise = new Promise((resolve, reject) => {
 
 // setup firestore
 admin.initializeApp(functions.config().firebase);
@@ -23,7 +22,7 @@ router.get('/', function(req, res, next) {
       next(err);
     });
 });
-
+/* Post new user*/
 router.post('/', function(req, res, next) {
   var newData = req.body
   var docRef = db.collection('users').doc(newData.name);
